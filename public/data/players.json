@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Kawhi Leonard",
+    "position": "SF",
+    "number": 2,
+    "image": "https://nba-players-profile-imgs.s3.amazonaws.com/kawhi-leonard.jpg"
+  },
+  {
+    "name": "Paul George",
+    "position": "SG",
+    "number": 13,
+    "image": "https://nba-players-profile-imgs.s3.amazonaws.com/paul-george.jpg"
+  },
+  {
+    "name": "Russell Westbrook",
+    "position": "PG",
+    "number": 0,
+    "image": "https://nba-players-profile-imgs.s3.amazonaws.com/russell-westbrook.jpg"
+  }
+]

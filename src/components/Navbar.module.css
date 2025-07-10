@@ -7,7 +7,17 @@
   align-items: center;
 }
 
+.logoSection {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 .logo {
+  height: 40px;
+}
+
+.title {
   font-size: 20px;
   font-weight: bold;
 }

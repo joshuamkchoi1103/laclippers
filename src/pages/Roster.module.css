@@ -9,7 +9,9 @@
 }
 
 .grid {
+  list-style: none;
+  padding: 0;
   display: flex;
-  flex-wrap: wrap;
-  gap: 24px;
+  flex-direction: column;
+  gap: 10px;
 }

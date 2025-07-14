@@ -1,0 +1,182 @@
+[
+  {
+    "id": 1,
+    "first_name": "Kawhi",
+    "last_name": "Leonard",
+    "position": "SF",
+    "jersey_number": 2,
+    "team": {
+      "id": 13,
+      "abbreviation": "LAC",
+      "full_name": "Los Angeles Clippers"
+    }
+  },
+  {
+    "id": 2,
+    "first_name": "James",
+    "last_name": "Harden",
+    "position": "SG",
+    "jersey_number": 1,
+    "team": {
+      "id": 13,
+      "abbreviation": "LAC",
+      "full_name": "Los Angeles Clippers"
+    }
+  },
+  {
+    "id": 3,
+    "first_name": "Ivica",
+    "last_name": "Zubac",
+    "position": "C",
+    "jersey_number": 40,
+    "team": {
+      "id": 13,
+      "abbreviation": "LAC",
+      "full_name": "Los Angeles Clippers"
+    }
+  },
+  {
+    "id": 4,
+    "first_name": "Derrick",
+    "last_name": "Jones Jr.",
+    "position": "SF",
+    "jersey_number": 55,
+    "team": {
+      "id": 13,
+      "abbreviation": "LAC",
+      "full_name": "Los Angeles Clippers"
+    }
+  },
+  {
+    "id": 5,
+    "first_name": "Kris",
+    "last_name": "Dunn",
+    "position": "G",
+    "jersey_number": 8,
+    "team": {
+      "id": 13,
+      "abbreviation": "LAC",
+      "full_name": "Los Angeles Clippers"
+    }
+  },
+  {
+    "id": 6,
+    "first_name": "Nicolas",
+    "last_name": "Batum",
+    "position": "PF",
+    "jersey_number": 33,
+    "team": {
+      "id": 13,
+      "abbreviation": "LAC",
+      "full_name": "Los Angeles Clippers"
+    }
+  },
+  {
+    "id": 7,
+    "first_name": "Amir",
+    "last_name": "Coffey",
+    "position": "SG",
+    "jersey_number": 7,
+    "team": {
+      "id": 13,
+      "abbreviation": "LAC",
+      "full_name": "Los Angeles Clippers"
+    }
+  },
+  {
+    "id": 8,
+    "first_name": "Kobe",
+    "last_name": "Brown",
+    "position": "G",
+    "jersey_number": 21,
+    "team": {
+      "id": 13,
+      "abbreviation": "LAC",
+      "full_name": "Los Angeles Clippers"
+    }
+  },
+  {
+    "id": 9,
+    "first_name": "Patrick",
+    "last_name": "Baldwin Jr.",
+    "position": "F",
+    "jersey_number": 23,
+    "team": {
+      "id": 13,
+      "abbreviation": "LAC",
+      "full_name": "Los Angeles Clippers"
+    }
+  },
+  {
+    "id": 10,
+    "first_name": "Patty",
+    "last_name": "Mills",
+    "position": "PG",
+    "jersey_number": 88,
+    "team": {
+      "id": 13,
+      "abbreviation": "LAC",
+      "full_name": "Los Angeles Clippers"
+    }
+  },
+  {
+    "id": 11,
+    "first_name": "Cam",
+    "last_name": "Christie",
+    "position": "G",
+    "jersey_number": 12,
+    "team": {
+      "id": 13,
+      "abbreviation": "LAC",
+      "full_name": "Los Angeles Clippers"
+    }
+  },
+  {
+    "id": 12,
+    "first_name": "Ben",
+    "last_name": "Simmons",
+    "position": "PG",
+    "jersey_number": 25,
+    "team": {
+      "id": 13,
+      "abbreviation": "LAC",
+      "full_name": "Los Angeles Clippers"
+    }
+  },
+  {
+    "id": 13,
+    "first_name": "Trentyn",
+    "last_name": "Flowers",
+    "position": "G",
+    "jersey_number": 9,
+    "team": {
+      "id": 13,
+      "abbreviation": "LAC",
+      "full_name": "Los Angeles Clippers"
+    }
+  },
+  {
+    "id": 14,
+    "first_name": "Kobe",
+    "last_name": "Sanders",
+    "position": "G",
+    "jersey_number": 0,
+    "team": {
+      "id": 13,
+      "abbreviation": "LAC",
+      "full_name": "Los Angeles Clippers"
+    }
+  },
+  {
+    "id": 15,
+    "first_name": "Yanic",
+    "last_name": "Konan Niederhauser",
+    "position": "C",
+    "jersey_number": 0,
+    "team": {
+      "id": 13,
+      "abbreviation": "LAC",
+      "full_name": "Los Angeles Clippers"
+    }
+  }
+]

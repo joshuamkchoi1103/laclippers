@@ -1,0 +1,21 @@
+.next-game {
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin: 24px auto;
+  max-width: 600px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.next-game h2 {
+  color: #c8102e;
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.next-game p {
+  font-size: 1.1rem;
+  margin: 6px 0;
+}

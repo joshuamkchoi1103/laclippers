@@ -1,21 +1,16 @@
+import React from 'react';
 import { Player } from '../types/player';
-import styles from './PlayerCard.module.css';
+import '../styles/PlayerCard.css';
 
 const PlayerCard: React.FC<{ player: Player }> = ({ player }) => {
-  const fullName = `${player.first_name} ${player.last_name}`;
-
   return (
-    <div className={styles.card}>
-      <img
-        src={`https://nba-players-profile-imgs.s3.amazonaws.com/default-headshot.png`} // Placeholder image
-        alt={fullName}
-        className={styles.image}
-      />
-      <h3 className={styles.name}>{fullName}</h3>
-      <p className={styles.details}>
-        Position: {player.position || 'N/A'}<br />
-        Team: {player.team.abbreviation}
-      </p>
+    <div className="player-box">
+      <div className="jersey-circle">#{player.jersey_number}</div>
+      <h3 className="player-name">{player.first_name} {player.last_name}</h3>
+      <div className="player-info">
+        <div className="info-item">🎽 <span>{player.position}</span></div>
+        <div className="info-item">🏀 <span>{player.team.abbreviation}</span></div>
+      </div>
     </div>
   );
 };

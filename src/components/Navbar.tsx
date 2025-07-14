@@ -1,18 +1,18 @@
 import { Link } from 'react-router-dom';
-import styles from './Navbar.module.css';
+import '../styles/Navbar.css';
 import logo from '../assets/clippers-logo.png';
 
 const Navbar: React.FC = () => {
   return (
-    <nav className={styles.navbar}>
-      <div className={styles.logoSection}>
-        <img src={logo} alt="Clippers Logo" className={styles.logo} />
-        <div className={styles.title}>LA Clippers</div>
+    <nav className="navbar">
+      <div className="logoSection">
+        <img src={logo} alt="Clippers Logo" className="logo" />
+        <div className="title">LA Clippers</div>
       </div>
-      <div className={styles.links}>
-        <Link to="/" className={styles.link}>Home</Link>
-        <Link to="/roster" className={styles.link}>Roster</Link>
-        <Link to="/schedule" className={styles.link}>Schedule</Link>
+      <div className="links">
+        <Link to="/" className="link">Home</Link>
+        <Link to="/roster" className="link">Roster</Link>
+        <Link to="/schedule" className="link">Schedule</Link>
       </div>
     </nav>
   );

@@ -12,8 +12,10 @@
 
 ## 🚀 Features
 
-- 🧱 Built with **React + TypeScript**
-- 🏀 Displays **live Clippers roster** via NBA API
-- 🔀 Client-side routing with React Router (`Home`, `Roster`, `Schedule`)
-- 🎨 Clean layout with **Clippers branding**
-- 🌐 Easily extensible to show stats, news, or game results
+- ⚛️ Built with **React + TypeScript**
+- 🏀 Live **Los Angeles Clippers roster** pulled from `nba_api` via FastAPI backend
+- 🔀 Client-side routing with **React Router** (`/`, `/roster`, `/schedule`)
+- 📸 Headshots, sortable roster table, height parsing, rookie handling, and contract data
+- 🎨 Clippers-themed layout using clean CSS (no Tailwind)
+- 🌐 Easily extensible to show **stats**, **news**, or **game results**
+

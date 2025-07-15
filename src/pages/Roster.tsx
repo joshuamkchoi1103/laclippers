@@ -1,42 +1,169 @@
-import { useEffect, useState } from 'react';
-import { Player } from '../types/player';
-import PlayerCard from '../components/PlayerCard';
-import  '../styles/Roster.css';
+import React, { useEffect, useState } from 'react';
+import '../styles/Roster.css';
 
-function Roster() {
-  const [players, setPlayers] = useState<Player[]>([]);
+type Player = {
+  id: string;
+  name: string;
+  position: string;
+  number: string;
+  height: string;
+  weight: string;
+  college: string;
+  experience: string;
+  age: string;
+  contract: string;
+};
+
+const convertHeightToFeetInches = (inches: number): string => {
+  const feet = Math.floor(inches / 12);
+  const remainingInches = inches % 12;
+  return `${feet}'${remainingInches}"`;
+};
+
+const parseHeightInInches = (h: string): number => {
+  const [feet, inches] = h.split('-').map(Number);
+  return feet * 12 + inches;
+};
+
+const positionOrder: { [key: string]: number } = {
+  G: 1,
+  F: 2,
+  C: 3,
+};
+
+const Roster: React.FC = () => {
+  const [roster, setRoster] = useState<Player[]>([]);
   const [loading, setLoading] = useState(true);
+  const [sortKey, setSortKey] = useState<string | null>(null);
+  const [sortAsc, setSortAsc] = useState<boolean>(true);
 
   useEffect(() => {
-    const fetchStaticRoster = async () => {
-      try {
-        const res = await fetch('/data/clippers-roster.json');
-        const data = await res.json();
-        setPlayers(data);
-      } catch (err) {
-        console.error('Failed to load static roster:', err);
-      } finally {
+    fetch('http://localhost:8000/api/roster')
+      .then((res) => res.json())
+      .then((data) => {
+        setRoster(data);
         setLoading(false);
-      }
-    };
-
-    fetchStaticRoster();
+      })
+      .catch((err) => {
+        console.error('Failed to load roster', err);
+        setLoading(false);
+      });
   }, []);
 
+  const handleSort = (key: string) => {
+    if (sortKey === key) {
+      setSortAsc(!sortAsc);
+    } else {
+      setSortKey(key);
+      setSortAsc(true);
+    }
+  };
+
+  const getSortIndicator = (key: string) => {
+    if (sortKey !== key) return '';
+    return sortAsc ? ' ▲' : ' ▼';
+  };
+
+  const sortedRoster = [...roster].sort((a, b) => {
+    if (!sortKey) return 0;
+
+    const valA = a[sortKey as keyof Player];
+    const valB = b[sortKey as keyof Player];
+
+    let result = 0;
+
+    if (sortKey === 'height') {
+      const hA = parseHeightInInches(valA as string);
+      const hB = parseHeightInInches(valB as string);
+      result = hA - hB;
+    } else if (sortKey === 'position') {
+      const pA = positionOrder[(valA as string)[0].toUpperCase()] || 999;
+      const pB = positionOrder[(valB as string)[0].toUpperCase()] || 999;
+      result = pA - pB;
+    } else if (sortKey === 'name') {
+      result = (valA as string).localeCompare(valB as string);
+    } else if (sortKey === 'experience') {
+  const toYears = (val: string) => val === 'R' ? 0 : Number(val);
+  const numA = toYears(valA as string);
+  const numB = toYears(valB as string);
+  result = numA - numB;
+    } else {
+      const numA = Number(valA);
+      const numB = Number(valB);
+      if (isNaN(numA) || isNaN(numB)) return 0;
+      result = numA - numB;
+    }
+
+
+    return sortAsc ? result : -result;
+  });
+
+  if (loading) return <p>Loading roster...</p>;
+
   return (
-    <div className="container">
-      <h2 className="title">2025 Clippers Roster</h2>
-      {loading ? (
-        <p>Loading players...</p>
-      ) : (
-        <div className="grid">
-          {players.map((player) => (
-            <PlayerCard key={player.id} player={player} />
-          ))}
-        </div>
-      )}
+    <div className="roster-container">
+      <h1>2024–25 Los Angeles Clippers Roster</h1>
+      <table className="roster-table">
+        <thead>
+          <tr>
+            <th>Photo</th>
+            <th className="clickable" onClick={() => handleSort('number')}>
+              # {getSortIndicator('number')}
+            </th>
+            <th className="clickable" onClick={() => handleSort('name')}>
+              Player {getSortIndicator('name')}
+            </th>
+            <th className="clickable" onClick={() => handleSort('position')}>
+              Position {getSortIndicator('position')}
+            </th>
+            <th className="clickable" onClick={() => handleSort('age')}>
+              Age {getSortIndicator('age')}
+            </th>
+            <th className="clickable" onClick={() => handleSort('height')}>
+              Height {getSortIndicator('height')}
+            </th>
+            <th className="clickable" onClick={() => handleSort('weight')}>
+              Weight {getSortIndicator('weight')}
+            </th>
+            <th>College</th>
+            <th className="clickable" onClick={() => handleSort('experience')}>
+              Experience {getSortIndicator('experience')}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {sortedRoster.map((player, idx) => {
+            const heightInInches = parseHeightInInches(player.height);
+            const displayHeight = convertHeightToFeetInches(heightInInches);
+
+            return (
+              <tr key={idx}>
+                <td>
+                  <img
+                    src={`https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${player.id}.png`}
+                    alt={player.name}
+                    width={60}
+                    onError={(e) => {
+                      e.currentTarget.onerror = null;
+                      e.currentTarget.src = '/default-headshot.png';
+                    }}
+                  />
+                </td>
+                <td>{player.number}</td>
+                <td>{player.name}</td>
+                <td>{player.position}</td>
+                <td>{player.age}</td>
+                <td>{displayHeight}</td>
+                <td>{player.weight} lbs</td>
+                <td>{player.college}</td>
+                <td>{player.experience} yrs</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
     </div>
   );
-}
+};
 
 export default Roster;

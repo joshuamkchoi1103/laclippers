@@ -1,11 +1,11 @@
 #!/bin/bash
 cd backend
-
-# Activate venv (adjust path if needed)
-source venv/bin/activate
+pip install -r requirements.txt
 
 # Start FastAPI
 uvicorn main:app --reload &
+
+echo ""
 
 # Start React app
 cd ..

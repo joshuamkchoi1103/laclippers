@@ -1,8 +1,8 @@
+import requests
+from bs4 import BeautifulSoup
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-from nba_api.stats.endpoints import commonteamroster
-import time
 
 app = FastAPI()
 
@@ -14,38 +14,54 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Clippers team ID (2024-25 season)
-CLIPPERS_TEAM_ID = 1610612746
-
 @app.get("/api/roster")
 def get_clippers_roster():
     try:
-        time.sleep(1)  # Rate limit
-        roster_response = commonteamroster.CommonTeamRoster(team_id=CLIPPERS_TEAM_ID)
-        data = roster_response.get_normalized_dict()
+        url = "https://www.basketball-reference.com/teams/LAC/2026.html"
+        headers = {
+            "User-Agent": "Mozilla/5.0"
+        }
 
-        if "CommonTeamRoster" not in data:
-            return JSONResponse(status_code=500, content={"error": "Roster data not available"})
+        res = requests.get(url, headers=headers)
+        soup = BeautifulSoup(res.text, "html.parser")
 
-        raw_players = data["CommonTeamRoster"]
+        # Parse players
+        roster_table = soup.find("table", {"id": "roster"})
+        players = []
 
-        players = [
-            {
-                "id": player.get("PLAYER_ID", "0"),
-                "age": player.get("AGE", "N/A"),
-                "name": f"{player.get('PLAYER', 'Unknown')}",
-                "position": player.get("POSITION", "N/A"),
-                "number": player.get("NUM", "N/A"),
-                "height": player.get("HEIGHT", "N/A"),
-                "weight": player.get("WEIGHT", "N/A"),
-                "college": player.get("SCHOOL", "N/A"),
-                "experience": player.get("EXP", "N/A"),
+        for row in roster_table.tbody.find_all("tr"):
+            cols = row.find_all("td")
+            if not cols:
+                continue
+            player = {
+                "number": cols[0].text,
+                "name": row.find("th").text,
+                "position": cols[1].text,
+                "height": cols[2].text,
+                "weight": cols[3].text,
+                "birth_date": cols[4].text,
+                "college": cols[5].text,
+                "experience": cols[6].text,
             }
-            for player in raw_players
-        ]
+            players.append(player)
 
+        # Parse coaches
+        coaches = []
+        coaches_header = soup.find("span", string="Coaches")
+        if coaches_header:
+            coach_table = coaches_header.find_parent("h2").find_next_sibling("div")
+            for li in coach_table.find_all("li"):
+                name = li.find("a").text if li.find("a") else li.text
+                role = li.text.replace(name, "").strip()
+                coaches.append({
+                    "name": name,
+                    "role": role
+                })
 
-        return JSONResponse(content=players)
+        return JSONResponse(content={
+            "players": players,
+            "coaches": coaches
+        })
 
     except Exception as e:
         import traceback

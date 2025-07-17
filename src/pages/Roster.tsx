@@ -2,16 +2,14 @@ import React, { useEffect, useState } from 'react';
 import '../styles/Roster.css';
 
 type Player = {
-  id: string;
+  number: string;
   name: string;
   position: string;
-  number: string;
   height: string;
   weight: string;
   college: string;
   experience: string;
-  age: string;
-  contract: string;
+  birth_date: string;
 };
 
 const convertHeightToFeetInches = (inches: number): string => {
@@ -22,6 +20,7 @@ const convertHeightToFeetInches = (inches: number): string => {
 
 const parseHeightInInches = (h: string): number => {
   const [feet, inches] = h.split('-').map(Number);
+  if (isNaN(feet) || isNaN(inches)) return 0;
   return feet * 12 + inches;
 };
 
@@ -41,7 +40,7 @@ const Roster: React.FC = () => {
     fetch('http://localhost:8000/api/roster')
       .then((res) => res.json())
       .then((data) => {
-        setRoster(data);
+        setRoster(data.players);
         setLoading(false);
       })
       .catch((err) => {
@@ -83,17 +82,16 @@ const Roster: React.FC = () => {
     } else if (sortKey === 'name') {
       result = (valA as string).localeCompare(valB as string);
     } else if (sortKey === 'experience') {
-  const toYears = (val: string) => val === 'R' ? 0 : Number(val);
-  const numA = toYears(valA as string);
-  const numB = toYears(valB as string);
-  result = numA - numB;
+      const toYears = (val: string) => val === 'R' ? 0 : Number(val);
+      const numA = toYears(valA as string);
+      const numB = toYears(valB as string);
+      result = numA - numB;
     } else {
       const numA = Number(valA);
       const numB = Number(valB);
       if (isNaN(numA) || isNaN(numB)) return 0;
       result = numA - numB;
     }
-
 
     return sortAsc ? result : -result;
   });
@@ -106,7 +104,6 @@ const Roster: React.FC = () => {
       <table className="roster-table">
         <thead>
           <tr>
-            <th>Photo</th>
             <th className="clickable" onClick={() => handleSort('number')}>
               # {getSortIndicator('number')}
             </th>
@@ -115,9 +112,6 @@ const Roster: React.FC = () => {
             </th>
             <th className="clickable" onClick={() => handleSort('position')}>
               Position {getSortIndicator('position')}
-            </th>
-            <th className="clickable" onClick={() => handleSort('age')}>
-              Age {getSortIndicator('age')}
             </th>
             <th className="clickable" onClick={() => handleSort('height')}>
               Height {getSortIndicator('height')}
@@ -138,21 +132,9 @@ const Roster: React.FC = () => {
 
             return (
               <tr key={idx}>
-                <td>
-                  <img
-                    src={`https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${player.id}.png`}
-                    alt={player.name}
-                    width={60}
-                    onError={(e) => {
-                      e.currentTarget.onerror = null;
-                      e.currentTarget.src = '/default-headshot.png';
-                    }}
-                  />
-                </td>
                 <td>{player.number}</td>
                 <td>{player.name}</td>
                 <td>{player.position}</td>
-                <td>{player.age}</td>
                 <td>{displayHeight}</td>
                 <td>{player.weight} lbs</td>
                 <td>{player.college}</td>

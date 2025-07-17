@@ -10,6 +10,7 @@ type Player = {
   college: string;
   experience: string;
   birth_date: string;
+  image: string | null;
 };
 
 const convertHeightToFeetInches = (inches: number): string => {
@@ -104,6 +105,7 @@ const Roster: React.FC = () => {
       <table className="roster-table">
         <thead>
           <tr>
+            <th>Photo</th>
             <th className="clickable" onClick={() => handleSort('number')}>
               # {getSortIndicator('number')}
             </th>
@@ -119,7 +121,6 @@ const Roster: React.FC = () => {
             <th className="clickable" onClick={() => handleSort('weight')}>
               Weight {getSortIndicator('weight')}
             </th>
-            <th>College</th>
             <th className="clickable" onClick={() => handleSort('experience')}>
               Experience {getSortIndicator('experience')}
             </th>
@@ -132,12 +133,29 @@ const Roster: React.FC = () => {
 
             return (
               <tr key={idx}>
+                <td>
+                  {player.image ? (
+                    <img
+                      src={player.image}
+                      alt={player.name}
+                      className="player-image"
+                      onError={(e) =>
+                        ((e.target as HTMLImageElement).src = '/default-player.png')
+                      }
+                    />
+                  ) : (
+                    <img
+                      src="/default-player.png"
+                      alt="default"
+                      className="player-image"
+                    />
+                  )}
+                </td>
                 <td>{player.number}</td>
                 <td>{player.name}</td>
                 <td>{player.position}</td>
                 <td>{displayHeight}</td>
                 <td>{player.weight} lbs</td>
-                <td>{player.college}</td>
                 <td>{player.experience} yrs</td>
               </tr>
             );

@@ -33,15 +33,36 @@ def get_clippers_roster():
             cols = row.find_all("td")
             if not cols:
                 continue
+
+            # Get player profile URL
+            player_link_tag = row.find("th").find("a")
+            player_name = player_link_tag.text if player_link_tag else row.find("th").text
+            player_url = "https://www.basketball-reference.com" + player_link_tag['href'] if player_link_tag else None
+
+            # Default image
+            player_img = None
+
+            # If profile URL exists, scrape headshot
+            if player_url:
+                try:
+                    profile_res = requests.get(player_url, headers=headers)
+                    profile_soup = BeautifulSoup(profile_res.text, "html.parser")
+                    img_tag = profile_soup.select_one("#meta img")
+                    if img_tag:
+                        player_img = "https://www.basketball-reference.com" + img_tag['src']
+                except Exception as e:
+                    print(f"Failed to load image for {player_name}")
+
             player = {
                 "number": cols[0].text,
-                "name": row.find("th").text,
+                "name": player_name,
                 "position": cols[1].text,
                 "height": cols[2].text,
                 "weight": cols[3].text,
                 "birth_date": cols[4].text,
                 "college": cols[5].text,
                 "experience": cols[6].text,
+                "image": player_img
             }
             players.append(player)
 

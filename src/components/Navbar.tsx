@@ -7,7 +7,7 @@ const Navbar: React.FC = () => {
     <nav className="navbar" aria-label="Main navigation">
       <div className="logoSection">
         <img src={logo} alt="Clippers Logo" className="logo" />
-        <div className="title">LA Clippers</div>
+        <div className="navbar-title">LA Clippers</div>
       </div>
       <div className="links">
         <NavLink to="/" className="link" end>

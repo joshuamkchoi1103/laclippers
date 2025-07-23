@@ -8,7 +8,7 @@ import AboutMe from './pages/AboutMe';
 
 const App: React.FC = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/laclippers"> {/* 👈 important fix for GitHub Pages */}
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />

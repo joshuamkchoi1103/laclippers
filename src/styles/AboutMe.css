@@ -1,0 +1,25 @@
+.aboutme-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  color: #333;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.aboutme-title {
+  font-size: 28px;
+  color: #c8102e;
+  margin-bottom: 1rem;
+}
+
+.aboutme-container a {
+  color: #0077cc;
+  text-decoration: none;
+}
+
+.aboutme-container a:hover {
+  text-decoration: underline;
+}

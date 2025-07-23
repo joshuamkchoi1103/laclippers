@@ -1,8 +1,9 @@
-import requests
-from bs4 import BeautifulSoup
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from nba_api.stats.endpoints import commonteamroster
+from nba_api.stats.static import teams
+import time
 
 app = FastAPI()
 
@@ -14,75 +15,42 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+def get_clippers_team_id():
+    clippers = [team for team in teams.get_teams() if team["abbreviation"] == "LAC"]
+    return clippers[0]["id"] if clippers else None
+
 @app.get("/api/roster")
 def get_clippers_roster():
     try:
-        url = "https://www.basketball-reference.com/teams/LAC/2026.html"
-        headers = {
-            "User-Agent": "Mozilla/5.0"
-        }
+        team_id = get_clippers_team_id()
+        if not team_id:
+            return JSONResponse(status_code=404, content={"error": "Clippers team not found"})
 
-        res = requests.get(url, headers=headers)
-        soup = BeautifulSoup(res.text, "html.parser")
+        # NBA API sometimes blocks rapid requests; simulate human behavior
+        time.sleep(1.5)
 
-        # Parse players
-        roster_table = soup.find("table", {"id": "roster"})
+        data = commonteamroster.CommonTeamRoster(team_id=team_id, season="2024-25")
+        df = data.get_data_frames()[0]
+
         players = []
+        for _, row in df.iterrows():
+            player_id = row["PLAYER_ID"]
+            image_url = f"https://cdn.nba.com/headshots/nba/latest/1040x760/{player_id}.png"
 
-        for row in roster_table.tbody.find_all("tr"):
-            cols = row.find_all("td")
-            if not cols:
-                continue
+            players.append({
+                "id": str(player_id),
+                "name": row["PLAYER"],
+                "number": str(row["NUM"]),
+                "position": row["POSITION"],
+                "height": row["HEIGHT"],
+                "weight": row["WEIGHT"],
+                "college": row["SCHOOL"],
+                "birth_date": row["BIRTH_DATE"],
+                "experience": row["EXP"],
+                "image": image_url
+            })
 
-            # Get player profile URL
-            player_link_tag = row.find("th").find("a")
-            player_name = player_link_tag.text if player_link_tag else row.find("th").text
-            player_url = "https://www.basketball-reference.com" + player_link_tag['href'] if player_link_tag else None
-
-            # Default image
-            player_img = None
-
-            # If profile URL exists, scrape headshot
-            if player_url:
-                try:
-                    profile_res = requests.get(player_url, headers=headers)
-                    profile_soup = BeautifulSoup(profile_res.text, "html.parser")
-                    img_tag = profile_soup.select_one("#meta img")
-                    if img_tag:
-                        player_img = "https://www.basketball-reference.com" + img_tag['src']
-                except Exception as e:
-                    print(f"Failed to load image for {player_name}")
-
-            player = {
-                "number": cols[0].text,
-                "name": player_name,
-                "position": cols[1].text,
-                "height": cols[2].text,
-                "weight": cols[3].text,
-                "birth_date": cols[4].text,
-                "college": cols[5].text,
-                "experience": cols[6].text,
-                "image": player_img
-            }
-            players.append(player)
-
-        # Parse coaches
-        coaches = []
-        coaches_header = soup.find("span", string="Coaches")
-        if coaches_header:
-            coach_table = coaches_header.find_parent("h2").find_next_sibling("div")
-            for li in coach_table.find_all("li"):
-                name = li.find("a").text if li.find("a") else li.text
-                role = li.text.replace(name, "").strip()
-                coaches.append({
-                    "name": name,
-                    "role": role
-                })
-
-        return JSONResponse(content={
-            "players": players,
-            "coaches": coaches
-        })
+        return JSONResponse(content={"players": players, "coaches": []})
 
     except Exception as e:
         import traceback

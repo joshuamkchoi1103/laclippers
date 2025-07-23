@@ -81,7 +81,14 @@ const Roster: React.FC = () => {
       const pB = positionOrder[(valB as string)[0].toUpperCase()] || 999;
       result = pA - pB;
     } else if (sortKey === 'name') {
-      result = (valA as string).localeCompare(valB as string);
+      const getLastName = (fullName: string) => {
+        const parts = fullName.trim().split(' ');
+        return parts.length > 1 ? parts[parts.length - 1] : parts[0];
+      };
+
+      const lastA = getLastName(valA as string);
+      const lastB = getLastName(valB as string);
+      result = lastA.localeCompare(lastB);
     } else if (sortKey === 'experience') {
       const toYears = (val: string) => val === 'R' ? 0 : Number(val);
       const numA = toYears(valA as string);
@@ -156,7 +163,7 @@ const Roster: React.FC = () => {
                 <td>{player.position}</td>
                 <td>{displayHeight}</td>
                 <td>{player.weight} lbs</td>
-                <td>{player.experience} yrs</td>
+                <td>{player.experience === 'R' ? 'Rookie' : `${player.experience} yrs`}</td>
               </tr>
             );
           })}

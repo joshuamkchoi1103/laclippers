@@ -4,13 +4,6 @@
   padding: 1rem;
 }
 
-.title {
-  font-size: 28px;
-  color: #c8102e;
-  margin-bottom: 1.5rem;
-  text-align: center;
-}
-
 .timeline {
   display: flex;
   flex-direction: column;

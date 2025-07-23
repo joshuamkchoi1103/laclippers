@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/laclippers/static/css/main.3c16ab38.css",
-    "main.js": "/laclippers/static/js/main.61122ba0.js",
+    "main.css": "/laclippers/static/css/main.63c6e785.css",
+    "main.js": "/laclippers/static/js/main.b5de1557.js",
     "static/media/court.png": "/laclippers/static/media/court.3b39866ed6d1102deb58.png",
     "static/media/clippers-logo.png": "/laclippers/static/media/clippers-logo.f02b40046d2cd48ef74e.png",
     "index.html": "/laclippers/index.html",
-    "main.3c16ab38.css.map": "/laclippers/static/css/main.3c16ab38.css.map",
-    "main.61122ba0.js.map": "/laclippers/static/js/main.61122ba0.js.map"
+    "main.63c6e785.css.map": "/laclippers/static/css/main.63c6e785.css.map",
+    "main.b5de1557.js.map": "/laclippers/static/js/main.b5de1557.js.map"
   },
   "entrypoints": [
-    "static/css/main.3c16ab38.css",
-    "static/js/main.61122ba0.js"
+    "static/css/main.63c6e785.css",
+    "static/js/main.b5de1557.js"
   ]
 }

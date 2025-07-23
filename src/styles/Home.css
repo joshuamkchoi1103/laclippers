@@ -1,39 +1,592 @@
-.container {
-  padding: 32px;
-  text-align: center;
+/* Home Page Wrapper */
+.home-wrapper {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s ease;
 }
 
-.title {
-  font-size: 32px;
-  font-weight: bold;
-  margin-bottom: 12px;
+.home-wrapper.loaded {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.subtitle {
-  font-size: 18px;
-  color: #444;
-}
-
+/* Enhanced Hero Banner */
 .hero-banner {
   position: relative;
   width: 100%;
-  height: 450px;
+  height: 100vh;
+  min-height: 600px;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .hero-banner img {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: brightness(70%);
+  filter: brightness(60%);
+  z-index: 1;
 }
 
 .overlay {
-  position: absolute;
-  top: 50%;
-  left: 10%;
-  transform: translateY(-50%);
+  position: relative;
+  z-index: 2;
+  text-align: center;
   color: white;
+  max-width: 800px;
+  padding: 2rem;
+}
+
+.overlay h1 {
+  font-size: 4rem;
+  font-weight: 900;
+  margin-bottom: 1rem;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(45deg, #ffffff, #e1e9f7);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: fadeInUp 1s ease 0.5s both;
+}
+
+.overlay p {
   font-size: 1.5rem;
+  margin-bottom: 2rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  animation: fadeInUp 1s ease 0.7s both;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  animation: fadeInUp 1s ease 0.9s both;
+}
+
+.cta-button {
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.cta-button.primary {
+  background: linear-gradient(45deg, #c8102e, #ff4d6d);
+  color: white;
+}
+
+.cta-button.secondary {
+  background: linear-gradient(45deg, #1d428a, #4a90e2);
+  color: white;
+}
+
+.cta-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
+}
+
+.scroll-indicator {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  color: white;
+  z-index: 2;
+  animation: bounce 2s infinite;
+}
+
+.scroll-arrow {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.scroll-indicator span {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Home Content */
+.home-content {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  padding: 0;
+}
+
+.home-content section {
+  padding: 4rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.section-header h2 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #1d428a;
+  margin: 0;
+}
+
+.view-more-btn {
+  padding: 10px 20px;
+  background: rgba(29, 66, 138, 0.1);
+  color: #1d428a;
+  border: 2px solid #1d428a;
+  border-radius: 25px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.view-more-btn:hover {
+  background: #1d428a;
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* Next Game Section */
+.next-game-section {
+  background: linear-gradient(135deg, #1d428a, #4a90e2);
+  color: white;
+  border-radius: 0;
+}
+
+.game-card {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 2rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.game-teams {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.team {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.team-logo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  background: linear-gradient(45deg, #c8102e, #ff4d6d);
+  color: white;
+  box-shadow: 0 8px 20px rgba(200, 16, 46, 0.4);
+}
+
+.team-logo.opponent {
+  background: linear-gradient(45deg, #552583, #fdb927);
+}
+
+.vs {
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+}
+
+.game-info {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.game-time {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 1rem;
+}
+
+.date, .time {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.game-location {
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+.watch-btn {
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(45deg, #c8102e, #ff4d6d);
+  color: white;
+  border: none;
+  border-radius: 15px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.watch-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(200, 16, 46, 0.4);
+}
+
+/* Player Highlights */
+.player-highlights {
+  background: white;
+}
+
+.highlight-carousel {
+  position: relative;
+}
+
+.highlight-card {
+  background: linear-gradient(135deg, #1d428a, #4a90e2);
+  color: white;
+  padding: 3rem;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(29, 66, 138, 0.3);
+  margin-bottom: 2rem;
+}
+
+.player-info h3 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.position {
+  font-size: 1.2rem;
+  opacity: 0.8;
+  margin-bottom: 2rem;
+  display: block;
+}
+
+.stat-display {
+  margin-top: 2rem;
+}
+
+.stat-value {
+  font-size: 4rem;
+  font-weight: 900;
+  color: #c8102e;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.stat-label {
+  font-size: 1.3rem;
+  margin-top: 0.5rem;
+  opacity: 0.9;
+}
+
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.dot {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(29, 66, 138, 0.3);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dot.active {
+  background: #1d428a;
+  transform: scale(1.2);
+}
+
+/* Quick Stats */
+.quick-stats {
+  background: linear-gradient(135deg, #c8102e, #ff4d6d);
+  color: white;
+}
+
+.quick-stats h2 {
+  color: white;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.stat-card {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 2rem;
+  border-radius: 15px;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+}
+
+.stat-card .stat-value {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: white;
+}
+
+.stat-card .stat-label {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  color: white;
+}
+
+/* Navigation Cards */
+.navigation-cards {
+  background: white;
+}
+
+.navigation-cards h2 {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.nav-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid transparent;
+}
+
+.nav-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.nav-card.news:hover {
+  border-color: #28a745;
+}
+
+.nav-card.schedule:hover {
+  border-color: #17a2b8;
+}
+
+.nav-card.model:hover {
+  border-color: #6f42c1;
+}
+
+.nav-card.roster:hover {
+  border-color: #fd7e14;
+}
+
+.card-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.nav-card h3 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.nav-card p {
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.card-arrow {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  font-size: 1.5rem;
+  color: #999;
+  transition: all 0.3s ease;
+}
+
+.nav-card:hover .card-arrow {
+  color: #333;
+  transform: translateX(5px);
+}
+
+/* Fan Section */
+.fan-section {
+  background: linear-gradient(135deg, #1d428a, #4a90e2);
+  color: white;
+  text-align: center;
+}
+
+.fan-content h2 {
+  color: white;
+  margin-bottom: 1rem;
+}
+
+.fan-content p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.social-btn {
+  padding: 12px 24px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border-radius: 25px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.social-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  40% {
+    transform: translateX(-50%) translateY(-10px);
+  }
+  60% {
+    transform: translateX(-50%) translateY(-5px);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .overlay h1 {
+    font-size: 2.5rem;
+  }
+  
+  .overlay p {
+    font-size: 1.2rem;
+  }
+  
+  .hero-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .home-content section {
+    padding: 2rem 1rem;
+  }
+  
+  .section-header {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+  
+  .section-header h2 {
+    font-size: 2rem;
+  }
+  
+  .game-teams {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .game-time {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .social-links {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-banner {
+    height: 70vh;
+    min-height: 500px;
+  }
+  
+  .overlay h1 {
+    font-size: 2rem;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .team-logo {
+    width: 60px;
+    height: 60px;
+    font-size: 1.2rem;
+  }
 }
 
